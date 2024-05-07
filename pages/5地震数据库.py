@@ -1,0 +1,38 @@
+import yaml
+from yaml.loader import SafeLoader
+import streamlit as st
+import streamlit_authenticator as stauth
+
+with open('./.streamlit/config.yaml') as file:
+    config = yaml.load(file, Loader=SafeLoader)
+
+
+authenticator = stauth.Authenticate(
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days'],
+    config['preauthorized']
+)
+
+if st.session_state.authentication_status is None:
+    st.warning("请登录 :point_down:")
+
+
+elif st.session_state["authentication_status"] is True:
+
+    st.header(':book:地震资料数据库')
+    st.divider()
+    st.caption('查询您需要的地震资料')
+    st.sidebar.write(f'你好， *{st.session_state["name"]}*')
+    st.sidebar.success('''欢迎使用本系统 :smile: :joy:
+                           :email: wyt3721@outlook.com
+                            Ver0.1a''')
+    authenticator.logout("退出", "sidebar")
+
+    # 创建数据库连接
+    conn = st.connection('mysql', 'sql')
+
+    # 用sql语言查询数据库
+    df = conn.query("select * from test limit 10;")
+    st.dataframe(df)

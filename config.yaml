@@ -1,0 +1,16 @@
+credentials:
+  usernames:
+    abc:
+      email: abc@gmail.com
+      name: abc
+      password: abc # To be replaced with hashed password
+    qlu:
+      email: qlus@gmail.com
+      name: qlu
+      password: qlu # To be replaced with hashed password
+cookie:
+  expiry_days: 1
+  key: random_signature_key # Must be string
+  name: random_cookie_name
+preauthorized:
+  emails:

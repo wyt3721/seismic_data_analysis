@@ -24,7 +24,7 @@ if not st.session_state["authentication_status"]:
 
 
 @st.cache_data
-def earth_chart():
+def read_data():
     data = pd.read_csv("./data/2000-2023.csv")
 
     return data
@@ -32,7 +32,7 @@ def earth_chart():
 
 
 if st.session_state["authentication_status"]:
-    earth_chart()
+    data2 = read_data()
     data2 = data2.iloc[:, 0:3]
     st.write("2000-2023全球地震震中分布图")
     data2 = data2.head()

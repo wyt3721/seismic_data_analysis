@@ -4,6 +4,7 @@ import pandas as pd
 import yaml
 from yaml.loader import SafeLoader
 import streamlit_authenticator as stauth
+import datatime
 # import plotly.graph_objects as go
 # import plotly.express as px
 # import pydeck as pdk
@@ -26,13 +27,14 @@ if not st.session_state["authentication_status"]:
 @st.cache_data
 def read_data():
     data = pd.read_csv("./data/2000-2023.csv")
-
     return data
     # st.map(data2, latitude='latitude', longitude='longitude')
 
 
 if st.session_state["authentication_status"]:
-    data2 = read_data()
+    df = read_data()
+    df['year'] = pd.DatetimeIndex(df['time']).year
+    df.head()
     data2 = data2.iloc[:, 0:3]
     st.write("2000-2023全球地震震中分布图")
     data2 = data2.head()

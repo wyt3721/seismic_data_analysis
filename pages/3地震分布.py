@@ -35,7 +35,7 @@ if st.session_state["authentication_status"]:
     df = read_data()
     df['year'] = pd.DatetimeIndex(df['time']).year
     df.head()
-    data2 = data2.iloc[:, 0:3]
+    df = df.iloc[:, 0:3]
     st.write("2000-2023全球地震震中分布图")
-    data2 = data2.head()
-    st.write(data2)
+    df = df.head()
+    st.write(df)

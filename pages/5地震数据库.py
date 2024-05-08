@@ -31,8 +31,8 @@ elif st.session_state["authentication_status"] is True:
     authenticator.logout("退出", "sidebar")
 
     # 创建数据库连接
-    conn = st.connection('mysql', 'sql')
+    # conn = st.connection('mysql', 'sql')
 
-    # 用sql语言查询数据库
-    df = conn.query("select * from test limit 10;")
-    st.dataframe(df)
+    # # 用sql语言查询数据库
+    # df = conn.query("select * from test limit 10;")
+    # st.dataframe(df)

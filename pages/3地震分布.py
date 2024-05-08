@@ -25,14 +25,15 @@ if not st.session_state["authentication_status"]:
 
 @st.cache_data
 def earth_chart():
-    data2 = pd.read_csv("./data/2000-2023.csv")
-    data2 = data2.iloc[:, 0:3]
-    st.write("2000-2023全球地震震中分布图")
-    st.write(pd.data2.head())
+    data = pd.read_csv("./data/2000-2023.csv")
+
+    return data
     # st.map(data2, latitude='latitude', longitude='longitude')
 
 
 if st.session_state["authentication_status"]:
     earth_chart()
-
-
+    data2 = data2.iloc[:, 0:3]
+    st.write("2000-2023全球地震震中分布图")
+    data2 = data2.head()
+    st.write(data2)

@@ -28,8 +28,7 @@ authenticator = stauth.Authenticate(
     config['preauthorized']
 )
 if not st.session_state["authentication_status"]:
-    st.warning("请登录 :point_down:")
-    st.page_link("app.py", label='登录')
+    st.switch_page('app.py')
 
 else:
     st.title(":game_die: 机器学习预测 ")

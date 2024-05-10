@@ -26,8 +26,6 @@ else:
     st.title(":bell: 地震波形文件处理 ")
     st.divider()
     st.caption('(支持 mseed/wav/sac  等格式)')
-    # st.success('登录成功')
-    st.balloons()
     st.sidebar.write(f'你好， *{st.session_state["name"]}*')
     st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                            :email: wyt3721@outlook.com

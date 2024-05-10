@@ -19,12 +19,10 @@ authenticator = stauth.Authenticate(
 )
 
 if not st.session_state["authentication_status"]:
-    st.warning("请登录 :point_down:")
     st.switch_page('../app.py')
 
 
 else:
-
     st.title(":bell: 地震波形文件处理 ")
     st.divider()
     st.caption('(支持 mseed/wav/sac  等格式)')

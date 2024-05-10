@@ -24,7 +24,7 @@ authenticator = stauth.Authenticate(
 )
 
 if not st.session_state["authentication_status"]:
-    st.warning("请登录 :point_down:")
+    st.switch_page('app.py')
 
 
 @st.cache_data

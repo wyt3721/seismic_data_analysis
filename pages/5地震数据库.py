@@ -22,9 +22,9 @@ if st.session_state.authentication_status is None:
 
 elif st.session_state["authentication_status"] is True:
 
-    st.header(':book:地震资料数据库,云端暂时只能使用sqlite数据库')
+    st.header(':book:地震资料数据库')
     st.divider()
-    st.caption('查询您需要的地震资料')
+    st.caption('查询您需要的地震资料,云端暂时只能使用sqlite数据库')
     st.sidebar.write(f'你好， *{st.session_state["name"]}*')
     st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                            :email: wyt3721@outlook.com

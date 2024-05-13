@@ -24,7 +24,7 @@ import streamlit_authenticator as stauth
 
 
 # elif st.session_state["authentication_status"] is True:
-    st.sidebar.write(f'你好， *{st.session_state["name"]}*')
+    # st.sidebar.write(f'你好， *{st.session_state["name"]}*')
     st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                            :email: wyt3721@outlook.com
                             Ver0.1a''')

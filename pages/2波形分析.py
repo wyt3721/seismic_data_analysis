@@ -7,22 +7,22 @@ import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
 
-with open('./.streamlit/config.yaml') as file:
-    config = yaml.load(file, Loader=SafeLoader)
+# with open('./.streamlit/config.yaml') as file:
+#     config = yaml.load(file, Loader=SafeLoader)
 
-authenticator = stauth.Authenticate(
-    config['credentials'],
-    config['cookie']['name'],
-    config['cookie']['key'],
-    config['cookie']['expiry_days'],
-    config['preauthorized']
-)
+# authenticator = stauth.Authenticate(
+#     config['credentials'],
+#     config['cookie']['name'],
+#     config['cookie']['key'],
+#     config['cookie']['expiry_days'],
+#     config['preauthorized']
+# )
 
-if not st.session_state["authentication_status"]:
-    st.switch_page('../app.py')
+# if not st.session_state["authentication_status"]:
+#     st.switch_page('../app.py')
 
 
-else:
+# else:
     st.title(":bell: 地震波形文件处理 ")
     st.divider()
     st.caption('(支持 mseed/wav/sac  等格式)')

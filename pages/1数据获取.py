@@ -28,7 +28,9 @@ import streamlit_authenticator as stauth
     st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                            :email: wyt3721@outlook.com
                             Ver0.1a''')
-    authenticator.logout("退出", "sidebar")
+    
+    # authenticator.logout("退出", "sidebar")
+ 
     c1, c2, c3 = st.columns([1, 2, 1])
     with c2:
         st.markdown("## :earth_asia: 地震数据采集 :earth_asia:")

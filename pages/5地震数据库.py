@@ -30,10 +30,15 @@ elif st.session_state["authentication_status"] is True:
                            :email: wyt3721@outlook.com
                             Ver0.1a''')
     authenticator.logout("退出", "sidebar")
-    my_bar = st.progress(0)
-    for percent_complete in range(100):
-        time.sleep(0.2)
-        my_bar.progress(percent_complete + 1)
+    # my_bar = st.progress(0)
+    # for percent_complete in range(100):
+    #     time.sleep(0.2)
+    #     my_bar.progress(percent_complete + 1)
+    s = st.selectbox('请选择数据库：', ['sqlite', 'mysql', 'postgresql'])
+
+    if s == 'sqlite':
+        conn = st.connection('pets_db', type='sql')
+        con
     # 创建数据库连接
     # conn = st.connection('mysql', 'sql')
 

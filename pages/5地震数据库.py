@@ -22,7 +22,7 @@ if st.session_state.authentication_status is None:
 
 elif st.session_state["authentication_status"] is True:
 
-    st.header(':book:地震资料数据库')
+    st.header(':book:地震资料数据库,云端暂时只能使用sqlite数据库')
     st.divider()
     st.caption('查询您需要的地震资料')
     st.sidebar.write(f'你好， *{st.session_state["name"]}*')
@@ -34,7 +34,7 @@ elif st.session_state["authentication_status"] is True:
     # for percent_complete in range(100):
     #     time.sleep(0.2)
     #     my_bar.progress(percent_complete + 1)
-    s = st.selectbox('请选择数据库：', ['sqlite', 'mysql', 'postgresql'])
+    s = st.selectbox('请选择数据库：', ['mysql','sqlite',  'postgresql'])
 
     if s == 'sqlite':
         conn = st.connection('pets_db', type='sql')

@@ -3,6 +3,9 @@ from yaml.loader import SafeLoader
 import streamlit as st
 import streamlit_authenticator as stauth
 import time
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
 with open('./.streamlit/config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
@@ -39,7 +42,7 @@ elif st.session_state["authentication_status"] is True:
     if s == 'sqlite':
         # conn = st.connection('env:', type='sql')
         # conn
-        engine = create_engine('sqlite:///pets_db')
+        engine = create_engine('sqlite:///pets_db', echo=Ture)
         engine
     # 创建数据库连接
     # conn = st.connection('mysql', 'sql')

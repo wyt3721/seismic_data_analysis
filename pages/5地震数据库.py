@@ -42,7 +42,7 @@ elif st.session_state["authentication_status"] is True:
     if s == 'sqlite':
         # conn = st.connection('env:', type='sql')
         # conn
-        engine = create_engine('./pets_db', echo=Ture)
+        engine = create_engine('sqlite:///pets_db', echo=Ture)
         engine
     # 创建数据库连接
     # conn = st.connection('mysql', 'sql')

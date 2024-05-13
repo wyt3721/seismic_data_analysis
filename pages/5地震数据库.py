@@ -40,7 +40,7 @@ elif st.session_state["authentication_status"] is True:
     s = st.selectbox('请选择数据库：', ['mysql', 'sqlite',  'postgresql'])
 
     if s == 'sqlite':
-        conn = st.connection('env:pet_db', type='sql')
+        conn = st.connection('pets_db', type='sql')
         conn
         # engine = create_engine('env:url', echo=Ture)
         # engine

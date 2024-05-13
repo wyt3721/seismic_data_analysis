@@ -7,23 +7,23 @@ from obspy.core import UTCDateTime
 import datetime
 import streamlit_authenticator as stauth
 
-with open('./.streamlit/config.yaml') as file:
-    config = yaml.load(file, Loader=SafeLoader)
+# with open('./.streamlit/config.yaml') as file:
+#     config = yaml.load(file, Loader=SafeLoader)
 
 
-authenticator = stauth.Authenticate(
-    config['credentials'],
-    config['cookie']['name'],
-    config['cookie']['key'],
-    config['cookie']['expiry_days'],
-    config['preauthorized']
-)
+# authenticator = stauth.Authenticate(
+#     config['credentials'],
+#     config['cookie']['name'],
+#     config['cookie']['key'],
+#     config['cookie']['expiry_days'],
+#     config['preauthorized']
+# )
 
-if st.session_state.authentication_status is None:
-    st.switch_page('app.py')
+# if st.session_state.authentication_status is None:
+#     st.switch_page('app.py')
 
 
-elif st.session_state["authentication_status"] is True:
+# elif st.session_state["authentication_status"] is True:
     st.sidebar.write(f'你好， *{st.session_state["name"]}*')
     st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                            :email: wyt3721@outlook.com

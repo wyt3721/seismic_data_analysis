@@ -27,7 +27,8 @@ from sqlalchemy.ext.declarative import declarative_base
 
 st.header(':book:地震资料数据库')
 st.divider()
-st.caption('查询您需要的地震资料,云端暂时不能使用数据库')
+st.subhead('查询您需要的地震资料:)
+st.caption('云端暂不能使用数据库')
 st.sidebar.write(f'你好， *{st.session_state["name"]}*')
 st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                        :email: wyt3721@outlook.com
@@ -39,9 +40,9 @@ st.sidebar.success('''欢迎使用本系统 :smile: :joy:
 #     my_bar.progress(percent_complete + 1)
 s = st.selectbox('请选择数据库：', ['mysql', 'sqlite',  'postgresql'])
 
-if s == 'sqlite':
-    conn = st.connection('pets_db', type='sql')
-    conn
+# if s == 'sqlite':
+#     conn = st.connection('pets_db', type='sql')
+#     conn
     # engine = create_engine('env:url', echo=Ture)
     # engine
 # 创建数据库连接

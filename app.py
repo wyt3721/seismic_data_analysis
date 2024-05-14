@@ -1,6 +1,6 @@
 # import yaml
 # import streamlit as st
-# from streamlit.runtime.state import SessionState
+from streamlit.runtime.state import SessionState
 # from yaml.loader import SafeLoader
 import streamlit_authenticator as stauth
 import pandas as pd
@@ -48,8 +48,8 @@ st.set_page_config(page_title='首页',
 # elif st.session_state["authentication_status"] is True:
 
     # st.success('登录成功')
-# st.balloons()
-st.sidebar.write(f'你好， *{st.session_state["name"]}*')
+st.balloons()
+# st.sidebar.write(f'你好， *{st.session_state["name"]}*')
 st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                      :email: wyt3721@outlook.com
                       Ver0.1a''')

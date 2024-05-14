@@ -30,7 +30,7 @@ st.caption('(支持 mseed/wav/sac  等格式)')
 st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                        :email: wyt3721@outlook.com
                         Ver0.1a''')
-authenticator.logout("退出", "sidebar")
+# authenticator.logout("退出", "sidebar")
 # 创建文件夹保存上传的文件
 if not os.path.exists("uploads"):
     os.makedirs("uploads")

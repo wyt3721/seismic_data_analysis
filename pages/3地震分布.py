@@ -25,6 +25,9 @@ from datetime import datetime
 
 # if not st.session_state["authentication_status"]:
 #     st.switch_page('app.py')
+st.sidebar.success('''欢迎使用本系统 :smile: :joy:
+                       :email: wyt3721@outlook.com
+                        Ver0.1a''')
 
 
 @st.cache_data

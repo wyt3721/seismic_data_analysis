@@ -50,6 +50,8 @@ if s == 'sqlite':
     res = cur.fetchall()
     res = pd.DataFrame(res)
     st.write(res)
+    cur.close()
+    con.close()
     # engine = create_engine('env:url', echo=Ture)
     # engine
 # 创建数据库连接

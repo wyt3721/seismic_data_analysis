@@ -7,6 +7,7 @@ from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import sqlite3
+import pandas as pd
 
 # with open('./.streamlit/config.yaml') as file:
 #     config = yaml.load(file, Loader=SafeLoader)

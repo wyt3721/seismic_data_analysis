@@ -29,7 +29,7 @@ st.header(':book:地震资料数据库')
 st.divider()
 st.write('查询您需要的地震资料:')
 st.caption('云端暂不能使用数据库')
-st.sidebar.write(f'你好， *{st.session_state["name"]}*')
+# st.sidebar.write(f'你好， *{st.session_state["name"]}*')
 st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                        :email: wyt3721@outlook.com
                         Ver0.1a''')

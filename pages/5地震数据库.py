@@ -43,7 +43,12 @@ s = st.selectbox('请选择数据库：', ['mysql', 'sqlite',  'postgresql'])
 
 if s == 'sqlite':
     conn = sqlite3.connect('pets.db')
-    conn
+    st.success('连接成功sqlite')
+    cur = con.cursor()
+    cur.execute("select * from test limit 10")
+    res = cur.fetchall()
+    res = pd.DataFrame(res)
+    st.write(res)
     # engine = create_engine('env:url', echo=Ture)
     # engine
 # 创建数据库连接

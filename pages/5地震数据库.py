@@ -40,9 +40,9 @@ st.sidebar.success('''欢迎使用本系统 :smile: :joy:
 #     my_bar.progress(percent_complete + 1)
 s = st.selectbox('请选择数据库：', ['mysql', 'sqlite',  'postgresql'])
 
-# if s == 'sqlite':
-#     conn = st.connection('pets_db', type='sql')
-#     conn
+if s == 'sqlite':
+    conn = st.connection（url=st.secrtes["connections.pets_db"]["url"])
+    conn
     # engine = create_engine('env:url', echo=Ture)
     # engine
 # 创建数据库连接

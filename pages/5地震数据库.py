@@ -41,7 +41,7 @@ st.sidebar.success('''欢迎使用本系统 :smile: :joy:
 s = st.selectbox('请选择数据库：', ['mysql', 'sqlite',  'postgresql'])
 
 if s == 'sqlite':
-    conn = st.connection（url=st.secrtes["connections.pets_db"]["url"])
+    conn = st.connection(url=st.secrtes["connections.pets_db"]["url"])
     conn
     # engine = create_engine('env:url', echo=Ture)
     # engine

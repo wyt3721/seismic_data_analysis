@@ -43,7 +43,7 @@ st.sidebar.success('''欢迎使用本系统 :smile: :joy:
 s = st.selectbox('请选择数据库：', ['mysql', 'sqlite',  'postgresql'])
 
 if s == 'sqlite':
-    conn = sqlite3.connect('pets.db')
+    con = sqlite3.connect('pets.db')
     st.success('连接成功sqlite')
     cur = con.cursor()
     cur.execute("select * from test limit 10")

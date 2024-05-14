@@ -46,7 +46,7 @@ if s == 'sqlite':
     con = sqlite3.connect('pets.db')
     st.success('连接成功sqlite')
     cur = con.cursor()
-    cur.execute("select * from test limit 10")
+    cur.execute("select * from test limit 100")
     res = cur.fetchall()
     res = pd.DataFrame(res)
     st.write(res)

@@ -33,7 +33,7 @@ from pyspark.sql.functions import unix_timestamp
 # else:
 st.title(":game_die: 机器学习预测 ")
 st.divider()
-st.sidebar.write(f'你好， *{st.session_state["name"]}*')
+# st.sidebar.write(f'你好， *{st.session_state["name"]}*')
 st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                        :email: wyt3721@outlook.com
                         Ver0.1a''')

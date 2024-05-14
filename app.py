@@ -13,13 +13,13 @@ import datetime
 #                                                           UpdateError)
 
 
-# st.set_page_config(page_title='首页',
-#                    page_icon=":house:",
-#                    layout="wide",
-#                    initial_sidebar_state="auto",
-#                    menu_items={'Report a bug': "mailto:wyt3721@outlook.com",
-#                                'About': 'This a demo application'}
-#                    )
+st.set_page_config(page_title='首页',
+                   page_icon=":house:",
+                   layout="wide",
+                   initial_sidebar_state="auto",
+                   menu_items={'Report a bug': "mailto:wyt3721@outlook.com",
+                               'About': 'This is a demo application'}
+                   )
 
 
 # with open('./.streamlit/config.yaml') as file:
@@ -48,7 +48,7 @@ import datetime
 # elif st.session_state["authentication_status"] is True:
 
     # st.success('登录成功')
-st.balloons()
+# st.balloons()
 st.sidebar.write(f'你好， *{st.session_state["name"]}*')
 st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                      :email: wyt3721@outlook.com

@@ -32,7 +32,7 @@ st.sidebar.write(f'你好， *{st.session_state["name"]}*')
 st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                        :email: wyt3721@outlook.com
                         Ver0.1a''')
-authenticator.logout("退出", "sidebar")
+# authenticator.logout("退出", "sidebar")
 # my_bar = st.progress(0)
 # for percent_complete in range(100):
 #     time.sleep(0.2)

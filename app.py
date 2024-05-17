@@ -57,7 +57,7 @@ st.sidebar.success('''欢迎使用本系统 :smile: :joy:
 
 st.image("./images/qlu.png")
 st.title(" :earth_asia:地震大数据分析可视化系统")
-st.audio("./images/qq.wav", format="audio/wav", loop=False, autoplay=False)
+st.audio("./images/qq.wav", format="audio/wav", loop=False, autoplay=True)
 
 st.divider()
 

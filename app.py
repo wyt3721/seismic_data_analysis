@@ -77,7 +77,8 @@ st.info("注： :blue[time为UTC时间,北京时间 = UTC + 8:00]")
 st.write('USGS:')
 url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv'
 df = pd.read_csv(url)
-st.dataframe(df.head())
+df = df.head(10)
+st.dataframe(df)
 # 取出经纬度两列，然后传参数给 st.map()
 data2 = df.iloc[:, 1:3]
 st.map(data2, latitude='latitude', longitude='longitude', use_container_width=True)

@@ -74,7 +74,7 @@ st.markdown(
 )
 # st.caption('（根据中国地震台网）')
 st.info("注： :blue[time为UTC时间,北京时间 = UTC + 8:00]")
-usgs 数据源：
+st.write('USGS:')
 url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv'
 df = pd.read_csv(url)
 st.write(df.style.highlight_max(''))

@@ -74,29 +74,36 @@ st.markdown(
 )
 # st.caption('（根据中国地震台网）')
 st.info("注： :blue[time为UTC时间,北京时间 = UTC + 8:00]")
-st.write('USGS:')
-url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv'
-df = pd.read_csv(url)
-df = df.head(10)
-st.dataframe(df)
-# 取出经纬度两列，然后传参数给 st.map()
-data2 = df.iloc[:, 1:3]
-st.map(data2, latitude='latitude', longitude='longitude', use_container_width=True)
-st.map(data, latitude='latitude', longitude='longitude', use_container_width=True)
+source = st.selectbox('数据源', (None, '美国地质局USGS', '中国地震台网'))
 
-# 中国地震台数据源：
-# url = 'https://news.ceic.ac.cn/index.html'
-# # 网页结构简单， 用pandas 可简单爬取网页表格数据:
-# df = pd.read_html(url)[0]
-# # 显示表格：
-# df = df.head(10)
-# st.dataframe(df)
-# # 取出经纬度两列数据
-# data = df.iloc[:, 2:4]
-# # st.map 不用中文经纬度作为列名
-# data.rename(columns={'纬度(°)': 'latitude', '经度(°)': 'longitude'}, inplace=True)
-# # 经纬度两列重命名后传参给 st.map()
-# st.map(data,  use_container_width=True)
+    if source == '美国地质局USGS':
+        url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv'
+        df = pd.read_csv(url)
+        df = df.head()
+        st.dataframe(df)
+        # st.dataframe(head)
+        # 取出经纬度两列，然后传参数给 st.map()
+        data2 = df.iloc[:, 1:3]
+        st.map(data2, latitude='latitude', longitude='longitude', use_container_width=True)
+
+    # 中国地震台数据源：
+    if source == '中国地震台网':
+        url = 'https://news.ceic.ac.cn/index.html'
+        # 网页结构简单， 用pandas 可简单爬取网页表格数据:
+        df = pd.read_html(url)[0]
+        # 显示表格：
+        df = df.head()
+        st.dataframe(df)
+        # 取出经纬度两列数据
+        data = df.iloc[:, 2:4]
+        # st.map 不用中文经纬度作为列名
+        data.rename(columns={'纬度(°)': 'latitude', '经度(°)': 'longitude'}, inplace=True)
+        # 经纬度两列重命名后传参给 st.map()
+        st.map(data,  use_container_width=True)
+
+    st.divider()
+    st.write('更多地震数据，请进入 :point_down:')
+    st.page_link("pages/1数据获取.py")
 
 
 

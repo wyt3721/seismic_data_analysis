@@ -22,12 +22,11 @@ st.divider()
 st.sidebar.success('''欢迎使用本系统 :smile: :joy:
                        :email: wyt3721@outlook.com
                         Ver0.1a''')
-tr = st.sidebar.selector('choose a framework:', ('None', 'Spark', 'pytorch', 'Scikit-learn')
-# authenticator.logout("退出", "sidebar")
-# 创建一个文件夹用于保存上传的文件
-# if not os.path.exists("learning"):
-#     os.makedirs("learning")
 
+# 创建一个文件夹用于保存上传的文件
+if not os.path.exists("learning"):
+    os.makedirs("learning")
+tr = st.sidebar.selector('choose a framework:', ('None', 'Spark', 'pytorch', 'Scikit-learn')
 uploaded_file = st.file_uploader("请上传数据集：")
 # 保存文件
 if uploaded_file is not None:
@@ -35,46 +34,47 @@ if uploaded_file is not None:
     with open(file_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
     # st.success(f"已保存数据集在: {file_path}")
-  if tr == 'Spark':
+
+   if tr == 'Spark':
     # 开启spark会话
-      spark = SparkSession.builder \
-          .appName("Earthquake Prediction") \
-          .getOrCreate()
-      st.success('Spark连接成功！')
-     
-      # 加载数据集
-      data = spark.read.csv(file_path, header=True, inferSchema=True)
-      # data.head(10)
-  
-      # data.describe()
-      # 数据预处理
-      st.selectbox("请选择特征：", ('time', 'latitude', 'longitude', 'depth'))
-      data = data.withColumn("time_numeric", unix_timestamp(col("time")))
-  
-      assembler = VectorAssembler(inputCols=["time_numeric", "latitude", "longitude", "depth"], outputCol="features")
-      output = assembler.transform(data)
-      train_data, test_data = output.select("features", "mag").randomSplit([0.7, 0.3], seed=42)
-  
-      # 构建和训练模型
-      alg = st.selectbox('请选择学习算法', ('None', '线性回归','随机森林', 'XGboost', 'others'))
-      if alg == '线性回归':
-          lr = LinearRegression(featuresCol="features", labelCol="mag")
-          pipeline = Pipeline(stages=[lr])
-          model = pipeline.fit(train_data)
-      
-          # 评估模型
-          st.selectbox('选择评估方法', ('二分', '回归', '多分类', '多标签', '聚类', '排序'))
-          predictions = model.transform(test_data)
-          evaluator = RegressionEvaluator(labelCol="mag", predictionCol="prediction", metricName="rmse")
-          rmse = evaluator.evaluate(predictions)
-          st.write("均方根误差是 ： %g" % rmse)
-      
-          # 保存模型
-          st.write('保存模型')
-          # model.write().overwrite().save("path/to/save/model")
-          st.write('加载模型')
-          # 关闭SparkSession
-          spark.stop()
+        spark = SparkSession.builder \
+            .appName("Earthquake Prediction") \
+            .getOrCreate()
+        st.success('Spark连接成功！')
+       
+        # 加载数据集
+        data = spark.read.csv(file_path, header=True, inferSchema=True)
+        # data.head(10)
+    
+        # data.describe()
+        # 数据预处理
+        st.selectbox("请选择特征：", ('time', 'latitude', 'longitude', 'depth'))
+        data = data.withColumn("time_numeric", unix_timestamp(col("time")))
+    
+        assembler = VectorAssembler(inputCols=["time_numeric", "latitude", "longitude", "depth"], outputCol="features")
+        output = assembler.transform(data)
+        train_data, test_data = output.select("features", "mag").randomSplit([0.7, 0.3], seed=42)
+    
+        # 构建和训练模型
+        alg = st.selectbox('请选择学习算法', ('None', '线性回归','随机森林', 'XGboost', 'others'))
+        if alg == '线性回归':
+            lr = LinearRegression(featuresCol="features", labelCol="mag")
+            pipeline = Pipeline(stages=[lr])
+            model = pipeline.fit(train_data)
+        
+            # 评估模型
+            st.selectbox('选择评估方法', ('二分', '回归', '多分类', '多标签', '聚类', '排序'))
+            predictions = model.transform(test_data)
+            evaluator = RegressionEvaluator(labelCol="mag", predictionCol="prediction", metricName="rmse")
+            rmse = evaluator.evaluate(predictions)
+            st.write("均方根误差是 ： %g" % rmse)
+        
+            # 保存模型
+            st.write('保存模型')
+            # model.write().overwrite().save("path/to/save/model")
+            st.write('加载模型')
+            # 关闭SparkSession
+            spark.stop()
       if tr == 'Scikit-learn':
         st.success('Scikit-learn')
     

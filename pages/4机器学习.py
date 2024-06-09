@@ -69,25 +69,26 @@ if uploaded_file is not None:
     train_data, test_data = output.select("features", "mag").randomSplit([0.7, 0.3], seed=42)
 
     # 构建和训练模型
-    st.selectbox('请选择学习算法', ('线性回归','随机森林', 'XGboost', 'others'))
-    lr = LinearRegression(featuresCol="features", labelCol="mag")
-    pipeline = Pipeline(stages=[lr])
-    model = pipeline.fit(train_data)
-
-    # 评估模型
-    st.selectbox('选择评估方法', ('二分', '回归', '多分类', '多标签', '聚类', '排序'))
-    predictions = model.transform(test_data)
-    evaluator = RegressionEvaluator(labelCol="mag", predictionCol="prediction", metricName="rmse")
-    rmse = evaluator.evaluate(predictions)
-    st.write("均方根误差是 ： %g" % rmse)
-
-    # 保存模型
-    st.write('保存模型')
-    # model.write().overwrite().save("path/to/save/model")
-    st.write('加载模型')
-    # 关闭SparkSession
-    spark.stop()
-  
+    alg = st.selectbox('请选择学习算法', ('None', '线性回归','随机森林', 'XGboost', 'others'))
+    if alg == '线性回归':
+        lr = LinearRegression(featuresCol="features", labelCol="mag")
+        pipeline = Pipeline(stages=[lr])
+        model = pipeline.fit(train_data)
+    
+        # 评估模型
+        st.selectbox('选择评估方法', ('二分', '回归', '多分类', '多标签', '聚类', '排序'))
+        predictions = model.transform(test_data)
+        evaluator = RegressionEvaluator(labelCol="mag", predictionCol="prediction", metricName="rmse")
+        rmse = evaluator.evaluate(predictions)
+        st.write("均方根误差是 ： %g" % rmse)
+    
+        # 保存模型
+        st.write('保存模型')
+        # model.write().overwrite().save("path/to/save/model")
+        st.write('加载模型')
+        # 关闭SparkSession
+        spark.stop()
+    
 model_url = st.text_input('请输入模型地址：')
 
 

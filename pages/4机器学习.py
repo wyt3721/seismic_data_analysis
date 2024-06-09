@@ -25,8 +25,8 @@ st.sidebar.success('''欢迎使用本系统 :smile: :joy:
 tr = st.sidebar.selector('choose a framework:', ('None', 'Spark', 'pytorch', 'Scikit-learn')
 # authenticator.logout("退出", "sidebar")
 # 创建一个文件夹用于保存上传的文件
-if not os.path.exists("learning"):
-    os.makedirs("learning")
+# if not os.path.exists("learning"):
+#     os.makedirs("learning")
 
 uploaded_file = st.file_uploader("请上传数据集：")
 # 保存文件

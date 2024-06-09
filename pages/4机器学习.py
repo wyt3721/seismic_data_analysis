@@ -26,7 +26,7 @@ st.sidebar.success('''欢迎使用本系统 :smile: :joy:
 # 创建一个文件夹用于保存上传的文件
 if not os.path.exists("learning"):
     os.makedirs("learning")
-tr = st.sidebar.selector('choose a framework:', ('None', 'Spark', 'pytorch', 'Scikit-learn')
+tr = st.sidebar.selector('choose a framework:', ('None', 'Spark', 'pytorch', 'Scikit-learn'))
 uploaded_file = st.file_uploader("请上传数据集：")
 # 保存文件
 if uploaded_file is not None:

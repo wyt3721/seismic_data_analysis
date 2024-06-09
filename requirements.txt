@@ -3,5 +3,5 @@ obspy==1.4.0
 pyspark==3.4.3
 # streamlit-authenticator==0.3.2
 findspark==2.0.1
-
+pytorch
 

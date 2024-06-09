@@ -53,12 +53,13 @@ if uploaded_file is not None:
     spark = SparkSession.builder \
         .appName("Earthquake Prediction") \
         .getOrCreate()
-
+    st.success('Spark连接成功！')
+   
     # 加载数据集
     data = spark.read.csv(file_path, header=True, inferSchema=True)
-    data.head(10)
+    # data.head(10)
 
-    data.describe()
+    # data.describe()
     # 数据预处理
     st.selectbox("请选择特征：", ('time', 'latitude', 'longitude', 'depth'))
     data = data.withColumn("time_numeric", unix_timestamp(col("time")))
@@ -86,4 +87,7 @@ if uploaded_file is not None:
     st.write('加载模型')
     # 关闭SparkSession
     spark.stop()
+  
+model_url = st.text_input('请输入模型地址：')
+
 

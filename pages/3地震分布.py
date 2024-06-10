@@ -38,7 +38,7 @@ def read_data():
 
 
 # if st.session_state["authentication_status"]:
-st.head("全球地震分布图")
+st.title("全球地震分布图")
 with st.sidebar:
     # st.title("地震年份")
     opinions = st.sidebar.selectbox("请选择年份：", (

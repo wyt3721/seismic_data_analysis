@@ -54,6 +54,7 @@ if uploaded_file is not None:
         st.dataframe(data.head())  # 查看前五行
     if des == '信息':
         st.text(data.columns.tolist())
+    if 
     # data.tail()
     # data.sample()
     # data.info()  # 查看数据的类型，完整性
@@ -197,30 +198,30 @@ if uploaded_file is not None:
             y_pred = lin_reg.predict(X_1)
             st.write('训练得分：', r2_score(y_pred, y_train))
 
-    # if tr == 'pytorch':
+    if tr == 'pytorch':
         # # ----------数据集----------
 
         # # MNIST数据集示例
-        # training_data = datasets.FashionMNIST(
-        #     root="data",
-        #     train=True,
-        #     download=True,
-        #     transform=ToTensor(),
-        # )
+        training_data = datasets.FashionMNIST(
+            root="data",
+            train=True,
+            download=True,
+            transform=ToTensor(),
+        )
         # # 加载MNIST数据集的测试集
-        # test_data = datasets.FashionMNIST(
-        #     root="data",
-        #     train=False,
-        #     download=True,
-        #     transform=ToTensor(),
-        # )
+        test_data = datasets.FashionMNIST(
+            root="data",
+            train=False,
+            download=True,
+            transform=ToTensor(),
+        )
 
         # # # batch大小
-        # batch_size = 64
+        batch_size = 64
 
         # # 创建dataloader
-        # train_dataloader = DataLoader(training_data, batch_size=batch_size)
-        # test_dataloader = DataLoader(test_data, batch_size=batch_size)
+        train_dataloader = DataLoader(training_data, batch_size=batch_size)
+        test_dataloader = DataLoader(test_data, batch_size=batch_size)
 
         # # 遍历dataloader
         # for X, y in test_dataloader:
@@ -231,32 +232,32 @@ if uploaded_file is not None:
 
         # # ----------模型----------
         # # 定义模型
-        # class NeuralNetwork(nn.Module):
-        #     def __init__(self):  # 初始化，实例化模型的时候就会调用
-        #         super(NeuralNetwork, self).__init__()
-        #         self.flatten = nn.Flatten()  # [64, 1, 28, 28] -> [64, 1*28*28]
-        #         self.linear_relu_stack = nn.Sequential(
-        #             nn.Linear(28 * 28, 512),  # [64, 1*28*28] -> [64, 512]
-        #             nn.ReLU(),
-        #             nn.Linear(512, 512),  # [64, 512] -> [64, 512]
-        #             nn.ReLU(),
-        #             nn.Linear(512, 10)  # [64, 512] -> [64, 10]
-        #         )
+        class NeuralNetwork(nn.Module):
+            def __init__(self):  # 初始化，实例化模型的时候就会调用
+                super(NeuralNetwork, self).__init__()
+                self.flatten = nn.Flatten()  # [64, 1, 28, 28] -> [64, 1*28*28]
+                self.linear_relu_stack = nn.Sequential(
+                    nn.Linear(28 * 28, 512),  # [64, 1*28*28] -> [64, 512]
+                    nn.ReLU(),
+                    nn.Linear(512, 512),  # [64, 512] -> [64, 512]
+                    nn.ReLU(),
+                    nn.Linear(512, 10)  # [64, 512] -> [64, 10]
+                )
 
-        #     def forward(self, x):  # 前向传播，输入数据进网络的时候才会调用
-        #         x = self.flatten(x)  # [64, 1*28*28]
-        #         logits = self.linear_relu_stack(x)  # [64, 10]
-        #         return logits
+            def forward(self, x):  # 前向传播，输入数据进网络的时候才会调用
+                x = self.flatten(x)  # [64, 1*28*28]
+                logits = self.linear_relu_stack(x)  # [64, 10]
+                return logits
 
 
         # # 使用gpu或者cpu进行训练
-        # device = "cuda" if torch.cuda.is_available() else "cpu"
+        device = "cuda" if torch.cuda.is_available() else "cpu"
         # # 打印使用的是gpu/cpu
-        # st.write("Using {} device".format(device))
+        st.write("Using {} device".format(device))
         # # 实例化模型
-        # model = NeuralNetwork().to(device)
+        model = NeuralNetwork().to(device)
         # # 打印模型结构
-        # st.write(model)
+        st.write(model)
 
 
 

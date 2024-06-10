@@ -197,7 +197,7 @@ if uploaded_file is not None:
             y_pred = lin_reg.predict(X_1)
             st.write('训练得分：', r2_score(y_pred, y_train))
 
-    if tr == 'pytorch':
+    # if tr == 'pytorch':
         # # ----------数据集----------
 
         # # MNIST数据集示例
@@ -264,6 +264,6 @@ if uploaded_file is not None:
 
 
 
-model_url = st.text_input('请输入模型地址：')
+# model_url = st.text_input('请输入模型地址：')
 
 

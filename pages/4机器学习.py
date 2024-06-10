@@ -198,20 +198,20 @@ if uploaded_file is not None:
     if tr == 'pytorch':
         # ----------数据集----------
 
-        # MNIST数据集示例
-        # training_data = datasets.FashionMNIST(
-        #     root="data",
-        #     train=True,
-        #     download=True,
-        #     transform=ToTensor(),
-        # )
-        # # 加载MNIST数据集的测试集
-        # test_data = datasets.FashionMNIST(
-        #     root="data",
-        #     train=False,
-        #     download=True,
-        #     transform=ToTensor(),
-        # )
+        MNIST数据集示例
+        training_data = datasets.FashionMNIST(
+            root="data",
+            train=True,
+            download=True,
+            transform=ToTensor(),
+        )
+        # 加载MNIST数据集的测试集
+        test_data = datasets.FashionMNIST(
+            root="data",
+            train=False,
+            download=True,
+            transform=ToTensor(),
+        )
         # training_data =
         # test_data =
 

@@ -24,7 +24,7 @@ from sklearn.linear_model import LinearRegression,Lasso,ElasticNet
 from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
-import seaborn as sn
+# import seaborn as sn
 from sklearn.linear_model import  Ridge
 from sklearn.neighbors import  KNeighborsRegressor
 from sklearn.svm import  SVR
@@ -122,8 +122,8 @@ if uploaded_file is not None:
         if st_agg == 'lr':
             lr = LinearRegression()  # 实例化一个线性回归对象
             lr.fit(X_train, y_train)  # 采用fit方法，拟合回归系数和截距
-            print(lr.intercept_)  # 输出截距
-            print(lr.coef_)  # 输出系数   可分析特征的重要性以及与目标的关系
+            # print(lr.intercept_)  # 输出截距
+            # print(lr.coef_)  # 输出系数   可分析特征的重要性以及与目标的关系
             y_pred = lr.predict(X_test)  # 模型预测
             st.write("R2=", r2_score(y_test, y_pred))  # 模型评价, 决定系数
             st.write("mse=",mean_squared_error(y_test, y_pred))#均方误差

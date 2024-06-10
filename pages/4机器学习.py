@@ -198,7 +198,7 @@ if uploaded_file is not None:
     if tr == 'pytorch':
         # ----------数据集----------
 
-        MNIST数据集示例
+        # MNIST数据集示例
         training_data = datasets.FashionMNIST(
             root="data",
             train=True,

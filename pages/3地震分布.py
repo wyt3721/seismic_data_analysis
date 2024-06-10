@@ -39,7 +39,9 @@ def read_data():
 
 # if st.session_state["authentication_status"]:
 st.head("全球地震分布图")
-opinions = st.sidebar.selectbox("请选择年份：", (
+with st.sidebar:
+    # st.title("地震年份")
+    opinions = st.sidebar.selectbox("请选择年份：", (
                                         '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008',
                                         '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017',
                                         '2018', '2019', '2020', '2021', '2022', '2023'))

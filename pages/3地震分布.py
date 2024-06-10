@@ -58,5 +58,5 @@ st.write('实时参考卫星云图')
 video_url = 'http://himawari8-dl.nict.go.jp/himawari8/movie/720/' + now + '_pifd.mp4'
 video_url_coastline = 'http://himawari8-dl.nict.go.jp/himawari8/movie/720/coastline/' + now + '_pifd.mp4'
 
-st.video(video_url, autoplay=False)
-st.video(video_url_coastline, autoplay=False)
+st.video(video_url, autoplay=True)
+st.video(video_url_coastline, autoplay=True)

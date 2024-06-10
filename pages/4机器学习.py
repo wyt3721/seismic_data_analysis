@@ -126,7 +126,7 @@ if uploaded_file is not None:
             # print(lr.coef_)  # 输出系数   可分析特征的重要性以及与目标的关系
             y_pred = lr.predict(X_test)  # 模型预测
             st.write("R2=", r2_score(y_test, y_pred))  # 模型评价, 决定系数
-            st.write("mse=",mean_squared_error(y_test, y_pred))#均方误差
+            st.write("MSE=",mean_squared_error(y_test, y_pred))#均方误差
             # print(lr.intercept_)  #输出截距
             # print(lr.coef_)  #系数
             plt.plot(y_test.values, c="r", label="y_test")
@@ -139,48 +139,49 @@ if uploaded_file is not None:
             EN.fit(X_train, y_train)  # 训练
             y_pred = EN.predict(X_test)  # 预测
             # 评价
-            st.write(r2_score(y_pred, y_test))
+            st.write('测试得分：',r2_score(y_pred, y_test))
             # print("mse=",mean_squared_error(y_test, y_pred))#均方误差
             y_predt = EN.predict(X_train)  # 查看训练集上的效果
-            st.write(r2_score(y_predt, y_train))
+            st.write('训练得分：',r2_score(y_predt, y_train))
         if st_agg == 'lasso':
             la = Lasso()
             la.fit(X_train, y_train)  # 拟合
             y_pred = la.predict(X_test)  # 预测
             # 评价
-            st.write(r2_score(y_pred, y_test))
+            st.write('测试得分：',r2_score(y_pred, y_test))
             # print("mse=",mean_squared_error(y_test, y_pred))#均方误差
             y_predt = la.predict(X_train)  # 查看训练集上的效果
-            st.write(r2_score(y_predt, y_train))
+            st.write('训练得分：',r2_score(y_predt, y_train))
             # prtin(la.coef_)   #输出系数 （部分系数为“0”，lasso常用与特征提取）  可分析特征的重要性以及与目标的关系
         if st_agg == 'Ridge':
             rd = Ridge(0.01)
             rd.fit(X_train, y_train)
             y_pred = rd.predict(X_test)
-            st.write(r2_score(y_pred, y_test))
+            st.write('测试得分:',r2_score(y_pred, y_test))
             y_predt = rd.predict(X_train)
-            st.write(r2_score(y_predt, y_train))
+            st.write('训练得分：',r2_score(y_predt, y_train))
         if st_agg == 'KN':
             Knr = KNeighborsRegressor()
             Knr.fit(X_train, y_train)
             y_pred = Knr.predict(X_test)
-            st.write(r2_score(y_pred, y_test))
+            st.write('测试得分：',r2_score(y_pred, y_test))
             y_predt = Knr.predict(X_train)
-            r2_score(y_predt, y_train)
+            st.write('训练得分：',r2_score(y_predt, y_train))
         if st_agg =='SVR':
             svr = SVR()
             svr.fit(X_train, y_train)
             y_pred = svr.predict(X_test)
-            st.write(r2_score(y_pred, y_test))
+            st.write('测试得分：',r2_score(y_pred, y_test))
             y_predt = svr.predict(X_train)
-            r2_score(y_predt, y_train)
+            st.write('训练得分：',r2_score(y_predt, y_train))
+
         if st_agg == 'DTR':
             dtr = DecisionTreeRegressor(max_depth=4)
             dtr.fit(X_train, y_train)
             y_pred = dtr.predict(X_test)
-            st.write(r2_score(y_pred, y_test))
+            st.write('测试得分：',r2_score(y_pred, y_test))
             y_predt = dtr.predict(X_train)
-            st.write(r2_score(y_predt, y_train))
+            st.write('训练得分：',r2_score(y_predt, y_train))
         if st_agg == 'PolyFeature':
             poly = PolynomialFeatures(degree=2)  # 添加特征(升维)
             poly.fit(X_train)
@@ -191,73 +192,71 @@ if uploaded_file is not None:
             lin_reg = LinearRegression()
             lin_reg.fit(X_1, y_train)
             # 预测、评价
-            y_pred = lin_reg.predict(X_1)
-            st.write(r2_score(y_pred, y_train))
             y_pred = lin_reg.predict(X_2)
-            st.write(r2_score(y_pred, y_test))
+            st.write('测试得分：', r2_score(y_pred, y_test))
+            y_pred = lin_reg.predict(X_1)
+            st.write('训练得分：', r2_score(y_pred, y_train))
+
     if tr == 'pytorch':
-        # ----------数据集----------
+        # # ----------数据集----------
 
-        # MNIST数据集示例
-        training_data = datasets.FashionMNIST(
-            root="data",
-            train=True,
-            download=True,
-            transform=ToTensor(),
-        )
-        # 加载MNIST数据集的测试集
-        test_data = datasets.FashionMNIST(
-            root="data",
-            train=False,
-            download=True,
-            transform=ToTensor(),
-        )
-        # training_data =
-        # test_data =
+        # # MNIST数据集示例
+        # training_data = datasets.FashionMNIST(
+        #     root="data",
+        #     train=True,
+        #     download=True,
+        #     transform=ToTensor(),
+        # )
+        # # 加载MNIST数据集的测试集
+        # test_data = datasets.FashionMNIST(
+        #     root="data",
+        #     train=False,
+        #     download=True,
+        #     transform=ToTensor(),
+        # )
 
+        # # # batch大小
+        # batch_size = 64
 
-        # # batch大小
-        batch_size = 64
+        # # 创建dataloader
+        # train_dataloader = DataLoader(training_data, batch_size=batch_size)
+        # test_dataloader = DataLoader(test_data, batch_size=batch_size)
 
-        # 创建dataloader
-        train_dataloader = DataLoader(training_data, batch_size=batch_size)
-        test_dataloader = DataLoader(test_data, batch_size=batch_size)
-
-        # 遍历dataloader
-        for X, y in test_dataloader:
-            print("Shape of X [N, C, H, W]: ", X.shape)  # 每个batch数据的形状
-            print("Shape of y: ", y.shape)  # 每个batch标签的形状
-            break
+        # # 遍历dataloader
+        # for X, y in test_dataloader:
+        #     print("Shape of X [N, C, H, W]: ", X.shape)  # 每个batch数据的形状
+        #     print("Shape of y: ", y.shape)  # 每个batch标签的形状
+        #     break
 
 
-        # ----------模型----------
-        # 定义模型
-        class NeuralNetwork(nn.Module):
-            def __init__(self):  # 初始化，实例化模型的时候就会调用
-                super(NeuralNetwork, self).__init__()
-                self.flatten = nn.Flatten()  # [64, 1, 28, 28] -> [64, 1*28*28]
-                self.linear_relu_stack = nn.Sequential(
-                    nn.Linear(28 * 28, 512),  # [64, 1*28*28] -> [64, 512]
-                    nn.ReLU(),
-                    nn.Linear(512, 512),  # [64, 512] -> [64, 512]
-                    nn.ReLU(),
-                    nn.Linear(512, 10)  # [64, 512] -> [64, 10]
-                )
+        # # ----------模型----------
+        # # 定义模型
+        # class NeuralNetwork(nn.Module):
+        #     def __init__(self):  # 初始化，实例化模型的时候就会调用
+        #         super(NeuralNetwork, self).__init__()
+        #         self.flatten = nn.Flatten()  # [64, 1, 28, 28] -> [64, 1*28*28]
+        #         self.linear_relu_stack = nn.Sequential(
+        #             nn.Linear(28 * 28, 512),  # [64, 1*28*28] -> [64, 512]
+        #             nn.ReLU(),
+        #             nn.Linear(512, 512),  # [64, 512] -> [64, 512]
+        #             nn.ReLU(),
+        #             nn.Linear(512, 10)  # [64, 512] -> [64, 10]
+        #         )
 
-            def forward(self, x):  # 前向传播，输入数据进网络的时候才会调用
-                x = self.flatten(x)  # [64, 1*28*28]
-                logits = self.linear_relu_stack(x)  # [64, 10]
-                return logits
+        #     def forward(self, x):  # 前向传播，输入数据进网络的时候才会调用
+        #         x = self.flatten(x)  # [64, 1*28*28]
+        #         logits = self.linear_relu_stack(x)  # [64, 10]
+        #         return logits
 
 
-        # 使用gpu或者cpu进行训练
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-        # 打印使用的是gpu/cpu
-        st.write("Using {} device".format(device))
-        # 实例化模型
-        model = NeuralNetwork().to(device)
-        # 打印模型结构
-        st.write(model)
+        # # 使用gpu或者cpu进行训练
+        # device = "cuda" if torch.cuda.is_available() else "cpu"
+        # # 打印使用的是gpu/cpu
+        # st.write("Using {} device".format(device))
+        # # 实例化模型
+        # model = NeuralNetwork().to(device)
+        # # 打印模型结构
+        # st.write(model)
 
 
 

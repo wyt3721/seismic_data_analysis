@@ -63,7 +63,7 @@ if uploaded_file is not None:
     # 删除有缺失的样本
     data.dropna(inplace=True)  
     input = st.multiselect("选择训练特征：", [*columns])
-    output = st.selectbox('选择输出标签', ( *columns) )
+    output = st.selectbox('选择输出标签', [*columns] )
 
     # st.sidebar.success('')
     tr = st.sidebar.selectbox( ' 选择计算框架 ',('None', 'Spark', 'pytorch', 'Scikit-learn'))

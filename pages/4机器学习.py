@@ -72,12 +72,12 @@ if uploaded_file is not None:
         st.success('Spark连接成功！')
 
         # 加载数据集
-        data = spark.read.csv(file_path, header=True, inferSchema=True)
-        # data.head(10)
+        # data = spark.read.csv(file_path, header=True, inferSchema=True)
+        # pandas dataframe 转 pyspark
+        data = spark_session.createDataFrame(data)
 
-        # data.describe()
         # 数据预处理
-        st.selectbox("请选择特征：", ('time', 'latitude', 'longitude', 'depth'))
+        st.selectbox("请选择输出特征：", ('time', 'latitude', 'longitude', 'depth'))
         data = data.withColumn("time_numeric", unix_timestamp(col("time")))
 
         assembler = VectorAssembler(inputCols=["time_numeric", "latitude", "longitude", "depth"], outputCol="features")

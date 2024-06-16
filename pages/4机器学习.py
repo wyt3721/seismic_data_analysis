@@ -72,14 +72,13 @@ if uploaded_file is not None:
         # appname = "test" # 任务名称
         # master = "local"  # 单机/集群模式设置
         # conf = SparkConf().setAppName(appname).setMaster(master)  # 本地
-        # 开启spark会话
         spark = SparkSession.builder \
             .appName("Earthquake Prediction") \
             .getOrCreate()
         st.success('Spark连接成功！')
 
         # pandas dataframe 转 pyspark
-        data = spark_session.createDataFrame(data)
+        data = spark.createDataFrame(data)
 
         # 数据预处理
         data = data.withColumn("time_numeric", unix_timestamp(col("time")))

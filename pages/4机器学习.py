@@ -65,7 +65,7 @@ if uploaded_file is not None:
     # features = st.selectbox('选择输出标签', [*columns] )
 
     # st.sidebar.success('')
-    tr = st.sidebar.selectbox( ' 选择计算框架 ',('None', 'Spark', 'pytorch', 'Scikit-learn'))
+    tr = st.sidebar.selectbox( ' 选择计算框架 ',('None', 'Spark', 'pytorch'))
     alg = st.sidebar.selectbox('选择合适算法', ('None', '线性回归', '随机森林', 'XGboost', 'others'))
     if tr == 'Spark':
         # 开启spark会话

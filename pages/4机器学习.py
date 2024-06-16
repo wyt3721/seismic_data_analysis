@@ -13,7 +13,7 @@ from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.sql.functions import unix_timestamp
-import torch
+# import torch
 from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets

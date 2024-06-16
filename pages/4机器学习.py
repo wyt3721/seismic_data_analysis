@@ -79,7 +79,7 @@ if uploaded_file is not None:
         data = spark_session.createDataFrame(data)
 
         # 数据预处理
-        st.multiselect("请选择训练特征：", *columns)
+        st.multiselect("请选择训练特征：", [*columns])
         data = data.withColumn("time_numeric", unix_timestamp(col("time")))
 
         assembler = VectorAssembler(inputCols=["time_numeric", "latitude", "longitude", "depth"], outputCol="features")

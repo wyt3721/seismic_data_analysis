@@ -54,10 +54,10 @@ if uploaded_file is not None:
     if des == 'head':
         st.dataframe(data.head())  # 查看前五行
     if des == 'info':
-        st.text(data.columns.tolist())
+        # st.text(data.columns.tolist())
+        st.dataframe(data.info())
     if des == 'describe':
-        info = data.describe()
-        st.dataframe(info)
+        st.dataframe(data.describe())
 
     # 删除有缺失的样本
     data.dropna(inplace=True)  

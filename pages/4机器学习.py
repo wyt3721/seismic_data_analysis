@@ -82,7 +82,7 @@ if uploaded_file is not None:
 
         # 数据预处理
         data = data.withColumn("time_numeric", unix_timestamp(col("time")))
-        assembler = VectorAssembler(inputCols=input_col, outputCol="features")
+        assembler = VectorAssembler(inputCols=["time_numeric", "latitude", "longitude", "depth"], outputCol="features")
         output = assembler.transform(data)
         train_data, test_data = output.select("features", "mag").randomSplit([0.7, 0.3], seed=42)
 

@@ -72,9 +72,9 @@ if uploaded_file is not None:
         # appname = "test" # 任务名称
         # master = "local"  # 单机/集群模式设置
         # conf = SparkConf().setAppName(appname).setMaster(master)  # 本地
-        spark_session = SparkSession.builder \
-            .setAppName("Test") \
-            # .config("spark.master", "spark://192.168.1.2:7077")\
+        # 开启spark会话
+        spark = SparkSession.builder \
+            .appName("Earthquake Prediction") \
             .getOrCreate()
         st.success('Spark连接成功！')
 

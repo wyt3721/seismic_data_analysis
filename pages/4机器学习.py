@@ -55,7 +55,6 @@ if uploaded_file is not None:
     if des == 'head':
         st.dataframe(data.head())  # 查看前五行
     if des == 'info':
-
         st.text(columns)
     if des == 'describe':
         st.dataframe(data.describe())
@@ -63,7 +62,7 @@ if uploaded_file is not None:
     # 删除有缺失的样本
     data.dropna(inplace=True)  
     input = st.multiselect("选择训练特征：", [*columns])
-    output = st.selectbox('选择输出标签', [*columns] )
+    features = st.selectbox('选择输出标签', [*columns] )
 
     # st.sidebar.success('')
     tr = st.sidebar.selectbox( ' 选择计算框架 ',('None', 'Spark', 'pytorch', 'Scikit-learn'))
@@ -75,21 +74,16 @@ if uploaded_file is not None:
             .getOrCreate()
         st.success('Spark连接成功！')
 
-        # 加载数据集
-        # data = spark.read.csv(file_path, header=True, inferSchema=True)
         # pandas dataframe 转 pyspark
         data = spark_session.createDataFrame(data)
 
         # 数据预处理
-
         data = data.withColumn("time_numeric", unix_timestamp(col("time")))
-
         assembler = VectorAssembler(inputCols=["time_numeric", "latitude", "longitude", "depth"], outputCol="features")
         output = assembler.transform(data)
         train_data, test_data = output.select("features", "mag").randomSplit([0.7, 0.3], seed=42)
 
-        # 构建和训练模型
-        
+        # 构建和训练模型        
         if alg == '线性回归':
             lr = LinearRegression(featuresCol="features", labelCol="mag")
             pipeline = Pipeline(stages=[lr])

@@ -51,10 +51,11 @@ if uploaded_file is not None:
     # st.success(f"已保存数据集在: {file_path}")
     data = pd.read_csv(file_path)  # 读取csv
     des = st.sidebar.radio('数据集概览', ['head', 'info', 'describe'])
+    columns = data.columns.tolist()
     if des == 'head':
         st.dataframe(data.head())  # 查看前五行
     if des == 'info':
-        columns = data.columns.tolist()
+
         st.text(columns)
 
     if des == 'describe':

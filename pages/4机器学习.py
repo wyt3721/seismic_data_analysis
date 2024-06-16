@@ -50,12 +50,14 @@ if uploaded_file is not None:
         f.write(uploaded_file.getbuffer())
     # st.success(f"已保存数据集在: {file_path}")
     data = pd.read_csv(file_path)  # 读取csv
-    des = st.radio('数据集概览', ['前五项', '信息', '统计'])
-    if des == '前五项':
+    # 删除空值
+    data.na.drop().show()
+    des = st.radio('数据集概览', ['head', 'info', 'describe'])
+    if des == 'head':
         st.dataframe(data.head())  # 查看前五行
-    if des == '信息':
+    if des == 'info':
         st.text(data.columns.tolist())
-    if des == '统计':
+    if des == 'describe':
         info = data.describe()
         st.dataframe(info)
     # data.tail()

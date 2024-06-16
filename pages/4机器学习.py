@@ -61,16 +61,19 @@ if uploaded_file is not None:
 
     # 删除有缺失的样本
     data.dropna(inplace=True)  
-    input = st.multiselect("选择训练特征：", [*columns])
-    features = st.selectbox('选择输出标签', [*columns] )
+    input_col = st.multiselect("选择训练特征：", [*columns])
+    # features = st.selectbox('选择输出标签', [*columns] )
 
     # st.sidebar.success('')
     tr = st.sidebar.selectbox( ' 选择计算框架 ',('None', 'Spark', 'pytorch', 'Scikit-learn'))
     alg = st.sidebar.selectbox('选择合适算法', ('None', '线性回归', '随机森林', 'XGboost', 'others'))
     if tr == 'Spark':
         # 开启spark会话
+        appname = "test" # 任务名称
+        master = "local"  # 单机/集群模式设置
+        conf = SparkConf().setAppName(appname).setMaster(master)  # 本地
         spark_session = SparkSession.builder \
-            .appName("Earthquake Prediction") \
+            .config(conf=conf) \
             .getOrCreate()
         st.success('Spark连接成功！')
 
@@ -79,7 +82,7 @@ if uploaded_file is not None:
 
         # 数据预处理
         data = data.withColumn("time_numeric", unix_timestamp(col("time")))
-        assembler = VectorAssembler(inputCols=["time_numeric", "latitude", "longitude", "depth"], outputCol="features")
+        assembler = VectorAssembler(inputCols=input_col, outputCol="features")
         output = assembler.transform(data)
         train_data, test_data = output.select("features", "mag").randomSplit([0.7, 0.3], seed=42)
 

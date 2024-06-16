@@ -66,7 +66,7 @@ if uploaded_file is not None:
     tr = st.sidebar.selectbox( ' 选择计算框架 ',('None', 'Spark', 'pytorch', 'Scikit-learn'))
     if tr == 'Spark':
         # 开启spark会话
-        spark = SparkSession.builder \
+        spark_session = SparkSession.builder \
             .appName("Earthquake Prediction") \
             .getOrCreate()
         st.success('Spark连接成功！')

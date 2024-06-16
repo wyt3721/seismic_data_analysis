@@ -58,11 +58,9 @@ if uploaded_file is not None:
     if des == 'describe':
         info = data.describe()
         st.dataframe(info)
-    # data.tail()
-    # data.sample()
-    # data.info()  # 查看数据的类型，完整性
-    # data.describe()  # 查看数据的统计特征（均值、方差等）
-    data.dropna(inplace=True)  # 删除有缺失的样本
+
+    # 删除有缺失的样本
+    data.dropna(inplace=True)  
 
     # st.sidebar.success('')
     tr = st.sidebar.selectbox( ' 选择计算框架 ',('None', 'Spark', 'pytorch', 'Scikit-learn'))

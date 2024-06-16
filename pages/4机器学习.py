@@ -54,7 +54,9 @@ if uploaded_file is not None:
         st.dataframe(data.head())  # 查看前五行
     if des == '信息':
         st.text(data.columns.tolist())
-    if 
+    if des == '统计':
+        info = data.info()
+        st.text(info)
     # data.tail()
     # data.sample()
     # data.info()  # 查看数据的类型，完整性

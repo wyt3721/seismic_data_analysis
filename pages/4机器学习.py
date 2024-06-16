@@ -55,7 +55,8 @@ if uploaded_file is not None:
         st.dataframe(data.head())  # 查看前五行
     if des == 'info':
         # st.text(data.columns.tolist())
-        st.text(data.info())
+        info = data.info(verbose=True)
+        st.text(info)
     if des == 'describe':
         st.dataframe(data.describe())
 

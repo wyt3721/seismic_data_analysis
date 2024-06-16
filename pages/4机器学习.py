@@ -69,11 +69,11 @@ if uploaded_file is not None:
     alg = st.sidebar.selectbox('选择合适算法', ('None', '线性回归', '随机森林', 'XGboost', 'others'))
     if tr == 'Spark':
         # 开启spark会话
-        appname = "test" # 任务名称
-        master = "local"  # 单机/集群模式设置
-        conf = SparkConf().setAppName(appname).setMaster(master)  # 本地
+        # appname = "test" # 任务名称
+        # master = "local"  # 单机/集群模式设置
+        # conf = SparkConf().setAppName(appname).setMaster(master)  # 本地
         spark_session = SparkSession.builder \
-            .config(conf=conf) \
+            .setAppName('Test') \
             .getOrCreate()
         st.success('Spark连接成功！')
 

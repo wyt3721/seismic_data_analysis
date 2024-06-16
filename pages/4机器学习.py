@@ -50,8 +50,6 @@ if uploaded_file is not None:
         f.write(uploaded_file.getbuffer())
     # st.success(f"已保存数据集在: {file_path}")
     data = pd.read_csv(file_path)  # 读取csv
-    # 删除空值
-    data.na.drop().show()
     des = st.radio('数据集概览', ['head', 'info', 'describe'])
     if des == 'head':
         st.dataframe(data.head())  # 查看前五行

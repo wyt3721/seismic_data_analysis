@@ -33,11 +33,12 @@ from sklearn.preprocessing import PolynomialFeatures
 
 st.title(":game_die: 机器学习 ")
 st.divider()
+st.caption("Spark, SK-Learn, Pytorch")
 
 
 # 创建一个文件夹用于保存上传的文件
-if not os.path.exists("learning"):
-    os.makedirs("learning")
+# if not os.path.exists("learning"):
+#     os.makedirs("learning")
 
 uploaded_file = st.file_uploader("请上传数据集：")
 # 保存文件
@@ -55,7 +56,7 @@ if uploaded_file is not None:
     if des == '信息':
         st.text(data.columns.tolist())
     if des == '统计':
-        info = data.info()
+        info = data.describe()
         st.text(info)
     # data.tail()
     # data.sample()

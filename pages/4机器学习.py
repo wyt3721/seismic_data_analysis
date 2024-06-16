@@ -54,7 +54,8 @@ if uploaded_file is not None:
     if des == 'head':
         st.dataframe(data.head())  # 查看前五行
     if des == 'info':
-        st.text(data.columns.tolist())
+        columns = data.columns.tolist()
+        st.text(columns)
 
     if des == 'describe':
         st.dataframe(data.describe())
@@ -77,7 +78,7 @@ if uploaded_file is not None:
         data = spark_session.createDataFrame(data)
 
         # 数据预处理
-        st.selectbox("请选择输出特征：", ('time', 'latitude', 'longitude', 'depth'))
+        st.multiselect("请选择训练特征：", *columns)
         data = data.withColumn("time_numeric", unix_timestamp(col("time")))
 
         assembler = VectorAssembler(inputCols=["time_numeric", "latitude", "longitude", "depth"], outputCol="features")

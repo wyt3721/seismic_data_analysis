@@ -2,8 +2,8 @@ import streamlit as st
 import os
 import obspy
 import matplotlib.pyplot as plt
-from obspy import read, Trace
-# import streamlit_authenticator as stauth
+# from obspy import read, Trace
+import streamlit_authenticator as stauth
 # import yaml
 # from yaml.loader import SafeLoader
 

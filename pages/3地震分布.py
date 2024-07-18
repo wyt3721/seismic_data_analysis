@@ -56,8 +56,8 @@ st.map(df_y, latitude='latitude', longitude='longitude')
 now = datetime.now().strftime('%Y%m%d')
 st.write('实时参考卫星云图')
 # video_url = 'https://ncthmwrwbtst.cr.chiba-u.ac.jp/movie/720/' + now + '_pifd.mp4'
-video_url = 'https://himawari8.nict.go.jp/movie/720/' + now + '_pidf.mp4'
+video_url = 'https://himawari8.nict.go.jp/movie/720/' + now + '_pifd.mp4'
 video_url_coastline = 'https://himawari8.nict.go.jp/movie/720/coastline/' + now + '_pifd.mp4'
 
-st.video(video_url, autoplay=True)
-st.video(video_url_coastline, autoplay=True)
+st.video(video_url, autoplay=False)
+st.video(video_url_coastline, autoplay=False)

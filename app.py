@@ -5,6 +5,8 @@ from streamlit.runtime.state import SessionState
 # import streamlit_authenticator as stauth
 import pandas as pd
 import datetime
+import requests
+from bs4 import BeautifulSoup
 # from streamlit_authenticator.utilities.exceptions import (CredentialsError,
 #                                                           ForgotError,
 #                                                           LoginError,
@@ -88,23 +90,54 @@ if source == '美国地质局USGS':
 
 # 中国地震台数据源：
 if source == '中国地震台网':
-    url = 'https://news.ceic.ac.cn/index.html'
-    # 网页结构简单， 用pandas 可简单爬取网页表格数据:
-    df = pd.read_html(url)[0]
-    # 显示表格：
-    df = df.head()
-    st.dataframe(df)
-    # 取出经纬度两列数据
-    data = df.iloc[:, 2:4]
-    # st.map 不用中文经纬度作为列名
-    data.rename(columns={'纬度(°)': 'latitude', '经度(°)': 'longitude'}, inplace=True)
-    # 经纬度两列重命名后传参给 st.map()
-    st.map(data,  use_container_width=True)
+    def extract_ceic_data():
+        url = "https://news.ceic.ac.cn/index.html"
+        try:
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+            response = requests.get(url, headers=headers)
+            response.encoding = 'utf-8'
+            
+            soup = BeautifulSoup(response.text, 'html.parser')
+            rows = soup.find_all('tr')[:5]
+            
+            data = []
+            for row in rows:
+                cells = row.find_all(['td', 'th'])
+                if cells:
+                    row_data = [cell.get_text(strip=True) for cell in cells]
+                    data.append(row_data)
+            
+            return pd.DataFrame(data) if data else None
+        except Exception as e:
+            st.error(f"获取数据时发生错误: {e}")
+            return None
+    
+    df = extract_ceic_data()
+    if df is not None:
+        # 显示表格：
+        st.dataframe(df)
+        # 取出经纬度两列数据 (第2、3列)
+        if len(df.columns) >= 4:
+            data = df.iloc[:, 2:4]
+            # 重命名列名
+            data.columns = ['latitude', 'longitude']
+            # 转换数据类型
+            data['latitude'] = pd.to_numeric(data['latitude'], errors='coerce')
+            data['longitude'] = pd.to_numeric(data['longitude'], errors='coerce')
+            # 删除无效数据
+            data = data.dropna()
+            if not data.empty:
+                st.map(data, use_container_width=True)
+            else:
+                st.warning("无法获取有效的地理位置数据")
+        else:
+            st.warning("数据格式不符合预期")
+    else:
+        st.error("无法获取中国地震台网数据")
 
 st.divider()
 st.write('更多地震数据，请进入 :point_down:')
 st.page_link("pages/1数据获取.py")
-
 
 
 

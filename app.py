@@ -75,7 +75,8 @@ st.markdown(
   """
 )
 # st.caption('（根据中国地震台网）')
-st.info("注： :blue[time为UTC时间,北京时间 = UTC + 8:00]")
+st.info("注1： :blue[time为UTC时间,北京时间 = UTC + 8:00]")
+st.info("注2： 由于streamlit cloud地址在国外,可能不能获取国内台网信息")
 source = st.selectbox('数据源', (None, '美国地质局USGS', '中国地震台网'))
 
 if source == '美国地质局USGS':
@@ -138,6 +139,7 @@ if source == '中国地震台网':
 st.divider()
 st.write('更多地震数据，请进入 :point_down:')
 st.page_link("pages/1数据获取.py")
+
 
 
 

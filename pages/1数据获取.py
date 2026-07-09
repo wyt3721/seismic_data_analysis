@@ -70,7 +70,7 @@ if st.button("🔍 开始查询", type="primary"):
                 buffer = io.BytesIO()
                 cat.write(buffer, format="JSON")
                 buffer.seek(0)
-                st.download_button(label="📥 下载目录 (JSON)", data=buffer, file_name="catalog.json", mime="application/json"))
+                st.download_button(label="📥 下载目录 (JSON)", data=buffer, file_name="catalog.json", mime="application/json")
                 
         except ValueError as e:
             st.error(f"❌ 参数错误或无匹配数据: {e}")

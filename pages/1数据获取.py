@@ -45,41 +45,42 @@ if st.button("🔍 开始查询", type="primary"):
     # 初始化 Client
     client = Client(options)
     
-    # 检查该数据中心是否支持 event 服务
-    if not client.has_service("event"):
-        st.error(f"❌ 数据中心 [{options}] 不支持地震事件目录查询！请选择 IRIS、USGS 或 EMSC 等支持该服务的中心。")
-    else:
-        # 支持服务，开始查询
-        with st.spinner(f"正在从 {options} 查询地震目录，请稍候..."):
-            try:
-                cat = client.get_events(
-                    starttime=t1,
-                    endtime=t2,
-                    minmagnitude=min_mag,
-                    mindepth=min_depth,
-                    minlatitude=min_latitude,
-                    maxlatitude=max_latitude,
-                    minlongitude=min_longitude,
-                    maxlongitude=max_longitude,
-                )
-                
-                if cat is None or len(cat) == 0:
-                    st.warning("⚠️ 未查询到符合条件的地震事件，请尝试放宽查询条件。")
-                else:
-                    st.success(f"✅ 成功查询到 {len(cat)} 条地震记录！")
-                    st.text(body=str(cat))
+    # 【修复】不再使用 has_service()，而是直接尝试查询并捕获异常
+    with st.spinner(f"正在从 {options} 查询地震目录，请稍候..."):
+        try:
+            cat = client.get_events(
+                starttime=t1,
+                endtime=t2,
+                minmagnitude=min_mag,
+                mindepth=min_depth,
+                minlatitude=min_latitude,
+                maxlatitude=max_latitude,
+                minlongitude=min_longitude,
+                maxlongitude=max_longitude,
+            )
+            
+            if cat is None or len(cat) == 0:
+                st.warning("⚠️ 未查询到符合条件的地震事件，请尝试放宽查询条件。")
+            else:
+                st.success(f"✅ 成功查询到 {len(cat)} 条地震记录！")
+                st.text(body=str(cat))
 
-                    # 【核心修复】提供 JSON 格式下载，完美解决 BytesIO 类型报错
-                    buffer = io.BytesIO()
-                    json_str = cat.write(format="JSON")
-                    buffer.write(json_str.encode('utf-8'))
-                    buffer.seek(0)
-                    
-                    st.download_button(label="📥 下载目录 (JSON)", data=buffer, file_name="catalog.json", mime="application/json")
-                    
-            except ValueError as e:
-                st.error(f"❌ 参数错误或无匹配数据: {e}")
-            except Exception as e:
+                # 提供 JSON 格式下载
+                buffer = io.BytesIO()
+                json_str = cat.write(format="JSON")
+                buffer.write(json_str.encode('utf-8'))
+                buffer.seek(0)
+                
+                st.download_button(label="📥 下载目录 (JSON)", data=buffer, file_name="catalog.json", mime="application/json")
+                
+        except ValueError as e:
+            st.error(f"❌ 参数错误或无匹配数据: {e}")
+        except Exception as e:
+            # 捕获所有异常，如果是数据中心不支持事件查询，会在这里被捕获并给出友好提示
+            error_msg = str(e)
+            if "does not have an event service" in error_msg:
+                st.error(f"❌ 数据中心 [{options}] 不支持地震事件目录查询！请选择 IRIS、USGS 或 EMSC 等支持该服务的中心。")
+            else:
                 st.error(f"❌ 查询过程中发生网络或服务错误: {e}")
 
 st.divider()

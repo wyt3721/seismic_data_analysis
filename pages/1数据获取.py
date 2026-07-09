@@ -66,10 +66,13 @@ if st.button("🔍 开始查询", type="primary"):
                 st.success(f"✅ 成功查询到 {len(cat)} 条地震记录！")
                 st.text(body=str(cat))
 
-                                # 提供 JSON 格式下载
+                
+                # 提供 JSON 格式下载
                 buffer = io.BytesIO()
-                # 【核心修复】：将 buffer 作为第一个参数（文件名/文件对象），format 作为第二个参数
-                cat.write(buffer, format="JSON")
+                
+                # 【核心修复】：先获取 JSON 字符串，再将其编码为 bytes 写入缓冲区
+                json_str = cat.write(format="JSON")
+                buffer.write(json_str.encode('utf-8'))
                 buffer.seek(0)
                 
                 st.download_button(label="📥 下载目录 (JSON)", data=buffer, file_name="catalog.json", mime="application/json")

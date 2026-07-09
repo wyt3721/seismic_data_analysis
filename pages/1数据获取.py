@@ -2,7 +2,6 @@ import streamlit as st
 from obspy.clients.fdsn import Client
 from obspy.core import UTCDateTime
 import datetime
-import io
 import tempfile
 
 # ================= 页面布局与侧边栏 =================
@@ -45,7 +44,7 @@ if st.button("🔍 开始查询", type="primary"):
     # 初始化 Client
     client = Client(options)
     
-    # 【修复】不再使用 has_service()，而是直接尝试查询并捕获异常
+    # 防御性编程：直接尝试请求并捕获异常
     with st.spinner(f"正在从 {options} 查询地震目录，请稍候..."):
         try:
             cat = client.get_events(
@@ -65,18 +64,32 @@ if st.button("🔍 开始查询", type="primary"):
                 st.success(f"✅ 成功查询到 {len(cat)} 条地震记录！")
                 st.text(body=str(cat))
 
-                # 提供 JSON 格式下载
-                buffer = io.BytesIO()
-                json_str = cat.write(buffer,format="JSON")
-                buffer.write(json_str.encode('utf-8'))
-                buffer.seek(0)
-                
-                st.download_button(label="📥 下载目录 (JSON)", data=buffer, file_name="catalog.json", mime="application/json")
+                # 【核心修复】基于 ObsPy 官方规范的 JSON 下载方案
+                try:
+                    # 1. 使用 tempfile 创建一个临时文件（自动管理路径，用完即焚）
+                    with tempfile.NamedTemporaryFile(mode='w+', suffix='.json', delete=False, encoding='utf-8') as tmp:
+                        temp_filename = tmp.name
+                        # 2. 关键一步：调用 write，传入文件名（符合文档规范），指定格式
+                        cat.write(temp_filename, format="JSON")
+                    
+                    # 3. 以二进制模式读取临时文件内容
+                    with open(temp_filename, 'rb') as f:
+                        json_bytes = f.read()
+
+                    # 4. 提供下载按钮
+                    st.download_button(
+                        label="📥 下载目录 (JSON)",
+                        data=json_bytes,
+                        file_name="seismic_catalog.json",
+                        mime="application/json"
+                    )
+                except Exception as e:
+                    st.error(f"导出 JSON 失败: {e}")
                 
         except ValueError as e:
             st.error(f"❌ 参数错误或无匹配数据: {e}")
         except Exception as e:
-            # 捕获所有异常，如果是数据中心不支持事件查询，会在这里被捕获并给出友好提示
+            # 捕获所有异常，给出友好提示
             error_msg = str(e)
             if "does not have an event service" in error_msg:
                 st.error(f"❌ 数据中心 [{options}] 不支持地震事件目录查询！请选择 IRIS、USGS 或 EMSC 等支持该服务的中心。")
@@ -93,8 +106,7 @@ t = UTCDateTime(t)
 
 if st.checkbox("显示一小时波形"):
     try:
-        # 注意：如果未点击查询，client 未定义，这里会报错。
-        # 生产环境建议将 client 初始化提取到按钮外部或 session_state
+        # 如果未点击查询，client 未定义，这里会报错，因此做防御处理
         if 'client' not in locals():
             client = Client(options)
             

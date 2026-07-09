@@ -68,9 +68,8 @@ if st.button("🔍 开始查询", type="primary"):
 
                                 # 提供 JSON 格式下载
                 buffer = io.BytesIO()
-                # 【核心修复】：JSON 导出的是字符串，必须用 encode() 转为字节才能写入 BytesIO
-                json_data = cat.write(format="JSON")
-                buffer.write(json_data.encode('utf-8'))
+                # 【核心修复】：将 buffer 作为第一个参数（文件名/文件对象），format 作为第二个参数
+                cat.write(buffer, format="JSON")
                 buffer.seek(0)
                 
                 st.download_button(label="📥 下载目录 (JSON)", data=buffer, file_name="catalog.json", mime="application/json")

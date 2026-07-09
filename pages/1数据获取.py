@@ -66,10 +66,13 @@ if st.button("🔍 开始查询", type="primary"):
                 st.success(f"✅ 成功查询到 {len(cat)} 条地震记录！")
                 st.text(body=str(cat))
 
-                # 提供 JSON 格式下载（新版 ObsPy 已移除 CSV 支持）
+                                # 提供 JSON 格式下载
                 buffer = io.BytesIO()
-                cat.write(buffer, format="JSON")
+                # 【核心修复】：JSON 导出的是字符串，必须用 encode() 转为字节才能写入 BytesIO
+                json_data = cat.write(format="JSON")
+                buffer.write(json_data.encode('utf-8'))
                 buffer.seek(0)
+                
                 st.download_button(label="📥 下载目录 (JSON)", data=buffer, file_name="catalog.json", mime="application/json")
                 
         except ValueError as e:

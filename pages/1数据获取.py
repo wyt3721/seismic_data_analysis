@@ -66,11 +66,11 @@ if st.button("🔍 开始查询", type="primary"):
                 st.success(f"✅ 成功查询到 {len(cat)} 条地震记录！")
                 st.text(body=str(cat))
 
-                # 提供 CSV 下载
+                # 提供 JSON 格式下载（新版 ObsPy 已移除 CSV 支持）
                 buffer = io.BytesIO()
-                cat.write(buffer, format="CSV")
+                cat.write(buffer, format="JSON")
                 buffer.seek(0)
-                st.download_button(label="📥 下载目录 (CSV)", data=buffer, file_name="catalog.csv", mime="text/csv")
+                st.download_button(label="📥 下载目录 (JSON)", data=buffer, file_name="catalog.json", mime="application/json"))
                 
         except ValueError as e:
             st.error(f"❌ 参数错误或无匹配数据: {e}")

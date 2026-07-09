@@ -67,7 +67,7 @@ if st.button("🔍 开始查询", type="primary"):
 
                 # 提供 JSON 格式下载
                 buffer = io.BytesIO()
-                json_str = cat.write(format="JSON")
+                json_str = cat.write(buffer,format="JSON")
                 buffer.write(json_str.encode('utf-8'))
                 buffer.seek(0)
                 

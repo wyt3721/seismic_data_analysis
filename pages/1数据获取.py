@@ -31,15 +31,15 @@ client = Client(options)
 col1, col2 = st.columns(2)
 with col1:
     t1 = st.date_input("开始日期", datetime.date(2024, 1, 1))
-    lon_range = st.slider('经度范围：', -180.0, 180.0, (73.0, 135.0))
+    lon_range = st.slider('经度范围：', -180.0, 180.0, (50.0, 150.0))
     min_longitude, max_longitude = lon_range
     min_mag = st.slider("最小震级：", min_value=1.0, max_value=10.0, step=0.1, value=5.0)
 
 with col2:
     t2 = st.date_input("截止日期", datetime.datetime.now())
-    lat_range = st.slider('纬度范围：', -90.0, 90.0, (4.0, 53.0))
+    lat_range = st.slider('纬度范围：', -90.0, 90.0, (10.0, 60.0))
     min_latitude, max_latitude = lat_range
-    min_depth = st.slider("最小深度(公里）：", min_value=5.0, max_value=100.0)
+    min_depth = st.slider("最小深度(公里）：", min_value=10.0, max_value=100.0)
 
 # 优化缓存：使用 _client 忽略对象哈希，增加异常捕获防止 ValueError 崩溃
 @st.cache_data(show_spinner="正在从数据中心查询事件目录...")

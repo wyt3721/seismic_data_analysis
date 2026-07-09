@@ -40,45 +40,47 @@ with col2:
     min_latitude, max_latitude = lat_range
     min_depth = st.slider("最小深度(公里）：", min_value=0.0, max_value=700.0, value=0.0)
 
-# 【核心修复】按钮必须顶格写，绝对不能放在 with 语句内部！
+# 查询按钮（必须顶格写）
 if st.button("🔍 开始查询", type="primary"):
-    # 在按钮内部初始化 Client，避免页面刷新时自动触发
+    # 初始化 Client
     client = Client(options)
     
-    # 显示查询中的加载动画
-    with st.spinner(f"正在从 {options} 查询地震目录，请稍候..."):
-        try:
-            cat = client.get_events(
-                starttime=t1,
-                endtime=t2,
-                minmagnitude=min_mag,
-                mindepth=min_depth,
-                minlatitude=min_latitude,
-                maxlatitude=max_latitude,
-                minlongitude=min_longitude,
-                maxlongitude=max_longitude,
-            )
-            
-            # 判断是否查询到数据
-            if cat is None or len(cat) == 0:
-                st.warning("⚠️ 未查询到符合条件的地震事件，请尝试放宽查询条件。")
-            else:
-                st.success(f"✅ 成功查询到 {len(cat)} 条地震记录！")
-                st.text(body=str(cat))
+    # 检查该数据中心是否支持 event 服务
+    if not client.has_service("event"):
+        st.error(f"❌ 数据中心 [{options}] 不支持地震事件目录查询！请选择 IRIS、USGS 或 EMSC 等支持该服务的中心。")
+    else:
+        # 支持服务，开始查询
+        with st.spinner(f"正在从 {options} 查询地震目录，请稍候..."):
+            try:
+                cat = client.get_events(
+                    starttime=t1,
+                    endtime=t2,
+                    minmagnitude=min_mag,
+                    mindepth=min_depth,
+                    minlatitude=min_latitude,
+                    maxlatitude=max_latitude,
+                    minlongitude=min_longitude,
+                    maxlongitude=max_longitude,
+                )
+                
+                if cat is None or len(cat) == 0:
+                    st.warning("⚠️ 未查询到符合条件的地震事件，请尝试放宽查询条件。")
+                else:
+                    st.success(f"✅ 成功查询到 {len(cat)} 条地震记录！")
+                    st.text(body=str(cat))
 
-                
-                # 提供 JSON 格式下载
-                buffer = io.BytesIO()
-                # 【核心修复】：buffer 作为第一个参数，format 作为第二个参数
-                cat.write(buffer, format="JSON")
-                buffer.seek(0)
-                
-                st.download_button(label="📥 下载目录 (JSON)", data=buffer, file_name="catalog.json", mime="application/json")
-                
-        except ValueError as e:
-            st.error(f"❌ 参数错误或无匹配数据: {e}")
-        except Exception as e:
-            st.error(f"❌ 查询过程中发生网络或服务错误: {e}")
+                    # 【核心修复】提供 JSON 格式下载，完美解决 BytesIO 类型报错
+                    buffer = io.BytesIO()
+                    json_str = cat.write(format="JSON")
+                    buffer.write(json_str.encode('utf-8'))
+                    buffer.seek(0)
+                    
+                    st.download_button(label="📥 下载目录 (JSON)", data=buffer, file_name="catalog.json", mime="application/json")
+                    
+            except ValueError as e:
+                st.error(f"❌ 参数错误或无匹配数据: {e}")
+            except Exception as e:
+                st.error(f"❌ 查询过程中发生网络或服务错误: {e}")
 
 st.divider()
 
@@ -90,6 +92,11 @@ t = UTCDateTime(t)
 
 if st.checkbox("显示一小时波形"):
     try:
+        # 注意：如果未点击查询，client 未定义，这里会报错。
+        # 生产环境建议将 client 初始化提取到按钮外部或 session_state
+        if 'client' not in locals():
+            client = Client(options)
+            
         # 获取波形数据
         stt = client.get_waveforms("IU", "ANMO,AFI", "00", "LHZ", t, t + 60 * 60)
         
@@ -103,7 +110,7 @@ if st.checkbox("显示一小时波形"):
             with open(tmp.name, 'rb') as f:
                 wave_data = f.read()
                 
-        st.download_button(label='下载波形', data=wave_data, file_name="download.mseed", mime="application/octet-stream")
+        st.download_button(label='📥 下载波形 (MSEED)', data=wave_data, file_name="download.mseed", mime="application/octet-stream")
         
     except Exception as e:
         st.error(f"波形获取失败，请检查时间或台站代码是否正确。错误信息：{e}")
